@@ -1,0 +1,20 @@
+{
+  "root": true,
+  "extends": [
+    "airbnb/base"
+  ],
+  "rules": {
+    "max-len": ["warn", 200]
+  },
+  "overrides": [
+    {
+      "files": ["*.test.js"],
+      "env": {
+        "mocha": true
+      },
+      "globals": {
+        "expect": "readonly"
+      }
+    }
+  ]
+}

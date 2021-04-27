@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "Simple coding test",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "coverage": "nyc npm test",
+    "eslint": "eslint --fix \"src/**/*.js\"",
+    "test": "mocha \"src/**/*.unit.test.js\"",
+    "test:watch": "mocha -w --recursive \"src/**/*.unit.test.js\""
   },
   "repository": {
     "type": "git",
@@ -13,5 +16,57 @@
     "name": "Huu Da Tran",
     "email": "huuda.tran@gmail.com"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "babel-regenerator-runtime": "^6.5.0",
+    "random-words": "^1.1.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/register": "^7.13.16",
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
+    "dirty-chai": "^2.0.1",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "mocha": "^8.3.2",
+    "nyc": "^15.1.0"
+  },
+  "babel": {
+    "sourceMaps": true,
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "mocha": {
+    "diff": true,
+    "exit": true,
+    "recursive": true,
+    "require": [
+      "@babel/register",
+      "./src/setup.test.js"
+    ]
+  },
+  "nyc": {
+    "all": true,
+    "temp-dir": "./reports/nyc_output",
+    "report-dir": "./reports/coverage",
+    "require": [
+      "@babel/register"
+    ],
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+      "reports/",
+      "src/**/*.test.js"
+    ],
+    "reporter": [
+      "cobertura",
+      "lcov",
+      "html"
+    ]
+  }
 }
