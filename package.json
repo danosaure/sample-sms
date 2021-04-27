@@ -1,0 +1,17 @@
+{
+  "name": "sample-sms",
+  "version": "1.0.0",
+  "description": "Simple coding test",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:danosaure/sample-sms.git"
+  },
+  "author": {
+    "name": "Huu Da Tran",
+    "email": "huuda.tran@gmail.com"
+  },
+  "license": "ISC"
+}
