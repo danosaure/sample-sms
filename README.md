@@ -49,3 +49,39 @@ we have time to review it.
   model.
 - One log server to keep trace of all events.
 - One in-memory DB to keep track of states.
+
+
+## Usage
+
+### Installation
+
+    npm ci
+
+### Build
+
+    npm run build
+
+### Testing
+
+Testing is ran during `npm run build`.
+
+We can run all the test suite with: `npm test`.
+
+If you are in development, you can also run `npm run test:watch` for tests to
+run every time a file is saved.
+
+### Execution
+
+Each should be run in a different terminal. This would somewhat simulate the
+distributed nature of the services. They are using the same code base, but we
+can assume they are in their own micro-service setup.
+
+#### Registry
+
+    npm run registry
+
+It would default to run on `http://localhost:9000`. It can be configured to run
+on another port, but you would have to pass the variable to all the following
+process too:
+
+    REGISTRY_PORT=10000 npm run registry
