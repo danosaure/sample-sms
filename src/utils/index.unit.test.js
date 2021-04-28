@@ -12,6 +12,7 @@ describe(filespace(__filename), () => {
   checkProperties(clone, [
     ['envNumber', 'function', 2],
     ['envString', 'function', 2],
+    ['getLinkHref', 'function', 2],
     ['numberWithDefault', 'function', 2],
     ['stringWithDefault', 'function', 2],
   ]);
