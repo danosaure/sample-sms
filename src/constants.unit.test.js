@@ -8,7 +8,6 @@ describe(filespace(__filename), () => {
   after(() => expect(clone).to.be.empty());
 
   checkProperties(clone, [
-    ['HAL_CONTENT_TYPE', 'string'],
     ['REGISTRY_URL', 'string'],
   ]);
 });
