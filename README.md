@@ -70,18 +70,43 @@ We can run all the test suite with: `npm test`.
 If you are in development, you can also run `npm run test:watch` for tests to
 run every time a file is saved.
 
+
 ### Execution
 
 Each should be run in a different terminal. This would somewhat simulate the
 distributed nature of the services. They are using the same code base, but we
 can assume they are in their own micro-service setup.
 
+The env variables indicates the default values.
+
+
 #### Registry
 
-    npm run registry
+    REGISTRY_PORT=9000 npm run registry
 
-It would default to run on `http://localhost:9000`. It can be configured to run
-on another port, but you would have to pass the variable to all the following
-process too:
+This registry will act like if it was a Queue, but also database and log server.
+In reality, we would want to send logs to another service.
 
-    REGISTRY_PORT=10000 npm run registry
+
+### Producer
+
+    REGISTRY_URL=http://localhost:9000/registry NUMBER_OF_MESSAGES_TO_SEND=1000 npm run producer
+
+This will just connect to the registry and send the number of messages.
+
+
+### Monitor
+
+    REGISTRY_URL=http://localhost:9000/registry MONITOR_REFRESH_DELAY=5 npm run monitor
+
+`MONITOR_REFRESH_DELAY` is the number of seconds between calls.
+
+### Sender
+
+    REGISTRY_URL=http://localhost:9000/registry SENDER_DELAY=250 npm run sender
+
+`SENDER_DELAY` is in millis. This will just be used as a delay between
+processing of each SMS.
+
+This service can be seen as an external service like AWS SNS or Twilio. We can
+execute many of these.
