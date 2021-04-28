@@ -15,5 +15,6 @@ describe(filespace(__filename), () => {
     ['getLinkHref', 'function', 2],
     ['numberWithDefault', 'function', 2],
     ['stringWithDefault', 'function', 2],
+    ['uriPath', 'function', 2],
   ]);
 });

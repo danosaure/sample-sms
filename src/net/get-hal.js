@@ -1,12 +1,12 @@
 import fetch from 'node-fetch';
 
-import { HAL_CONTENT_TYPE } from '../constants';
+import { CONTENT_TYPES, HEADERS } from './constants';
 
 export default async (url) => {
   const res = await fetch(url, {
     method: 'GET',
     headers: {
-      Accept: HAL_CONTENT_TYPE,
+      [HEADERS.ACCEPT]: CONTENT_TYPES.HAL,
     },
   });
 
