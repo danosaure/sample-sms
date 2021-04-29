@@ -5,4 +5,5 @@ export const REGISTRY_PATH = envString('REGISTRY_PATH', '/registry');
 
 export const PATHS = Object.freeze({
   SEND_SMS: 'send-sms',
+  STATUS: 'status',
 });

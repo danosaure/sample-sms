@@ -10,6 +10,7 @@
     "test": "mocha \"src/**/*.unit.test.js\"",
     "test:watch": "mocha -w --recursive \"src/**/*.unit.test.js\"",
     "producer": "DEBUG=SMS:* node build/scripts/producer",
+    "monitor": "DEBUG=SMS:* node build/scripts/monitor",
     "registry": "DEBUG=SMS:* node build/scripts/registry"
   },
   "repository": {
