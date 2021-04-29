@@ -4,10 +4,13 @@ import { sanitize, SEND_SMS } from '../api';
 import { sendHal } from '../net';
 
 import { PATHS, REGISTRY_PATH } from './constants';
+import { add as addToQueue } from './queue';
 
 import _debug from './debug';
 
 const debug = _debug(__filename);
+
+const { FORM } = SEND_SMS;
 
 export default async (req, res) => {
   // NOTE: RoutesInfo
@@ -16,8 +19,14 @@ export default async (req, res) => {
     title: 'Sending sms',
   }, href);
 
-  const form = sanitize(SEND_SMS.FORM, req.body);
-  debug('form=', form);
+  const form = sanitize(FORM, req.body);
+  // debug('form=', form);
+  // TODO: We could validate the form...
+
+  const messages = form[FORM.MESSAGES.KEY];
+  debug('messages=', messages);
+
+  addToQueue(messages);
 
   sendHal(req, res, resource);
 };
