@@ -1,6 +1,6 @@
 import hal from 'hal';
 
-import { SEND_SMS } from '../api';
+import { SEND_SMS, STATUS } from '../api';
 import { sendHal } from '../net';
 import { uriPath } from '../utils';
 
@@ -27,6 +27,11 @@ export default async (req, res) => {
   //    max_message_size: 100, // 100-char max per message
   //    ...
   //  }
+
+  resource.link(STATUS.KEY, {
+    title: 'Server status',
+    href: uriPath(req, `${REGISTRY_PATH}/${PATHS.STATUS}`),
+  });
 
   debug('resource=', resource);
 
