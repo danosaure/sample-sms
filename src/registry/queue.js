@@ -27,4 +27,6 @@ export const add = (req, messages) => {
   notifySenders(req);
 };
 
+export const hasMessages = () => Boolean(queue.length);
+
 export const pop = () => queue.shift();

@@ -4,7 +4,8 @@ import { sanitize, REGISTER_SENDER } from '../api';
 import { sendHal } from '../net';
 import { uriPath } from '../utils';
 
-import { add as addSender } from './senders';
+import { hasMessages } from './queue';
+import { add as addSender, notify as notifySenders } from './senders';
 
 // import _debug from './debug';
 //
@@ -25,6 +26,10 @@ export default async (req, res) => {
   const id = addSender(url);
 
   resource[RESULT.ID] = id;
+
+  if (hasMessages()) {
+    notifySenders(req);
+  }
 
   sendHal(req, res, resource);
 };
