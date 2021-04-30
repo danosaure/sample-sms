@@ -25,12 +25,20 @@ export default async (href) => {
 
       const total = body[RESULT.TOTAL];
       messages.push(`TOTAL: ${total}`);
-      messages.push(`SUCCESS: ${total ? body[RESULT.SUCCESSFUL] : '-'}`);
-      messages.push(`FAILED: ${total ? body[RESULT.FAILED] : '-'}`);
+
+      messages.push(`QUEUE: ${body[RESULT.QUEUE_SIZE]}`);
 
       const attempts = body[RESULT.ATTEMPTS];
+      messages.push(`ATTEMPTS: ${attempts}`);
+
+      const successful = body[RESULT.SUCCESSFUL];
+      messages.push(`SUCCESS: ${total ? successful : '-'}`);
+      messages.push(`FAILED: ${total ? body[RESULT.FAILED] : '-'}`);
+
       const processTime = body[RESULT.PROCESS_TIME];
-      messages.push(`AVERAGE TIME: ${total && attempts ? processTime / attempts : '-'}`);
+      messages.push(`AVERAGE PROCESS TIME: ${total && attempts ? `${Math.round(processTime / attempts)}ms` : '-'}`);
+
+      messages.push(`SUCCESS RATIO: ${total && attempts ? `${Math.round((successful * 100) / attempts)}%` : '-'}`);
     } else {
       messages.push('Invalid response.');
     }

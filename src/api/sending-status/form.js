@@ -20,9 +20,18 @@ export const FORM = Object.freeze({
     validate: (value) => (typeof value === 'string'),
   }),
 
+  SUCCESS: Object.freeze({
+    KEY: 'success',
+    DEFAULT: false,
+    sanitize: (value) => ((typeof value === 'boolean') ? value : null),
+    validate: (value) => (typeof value === 'boolean'),
+  }),
+
   fields: () => Object.freeze([
+    FORM.ERROR,
     FORM.MESSAGE_ID,
     FORM.SENDER_ID,
+    FORM.SUCCESS,
   ]),
 
 });

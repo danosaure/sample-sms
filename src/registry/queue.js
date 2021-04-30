@@ -37,3 +37,5 @@ export const hasMessages = () => Boolean(queue.length);
 export const popId = () => idsToSend.shift();
 
 export const byId = (id) => queue.find((message) => message.id === id);
+
+export const size = () => idsToSend.length;

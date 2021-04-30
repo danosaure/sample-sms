@@ -7,5 +7,6 @@ export const PATHS = Object.freeze({
   POP_MESSAGE: 'pop-message',
   REGISTER_SENDER: 'register-sender',
   SEND_SMS: 'send-sms',
+  SENDING_STATUS: 'sending-status',
   STATUS: 'status',
 });

@@ -24,11 +24,15 @@ export default async () => {
       };
         // debug('form=', form);
 
-      /* const resPost = */await postJson(href, form);
-      // debug('resPost=', resPost);
-
-      // eslint-disable-next-line no-console
-      console.log('Number of messages put in queue:', NUMBER_OF_MESSAGES_TO_SEND);
+      const resPost = await postJson(href, form);
+      debug('resPost=', resPost);
+      if (resPost.ok) {
+        // eslint-disable-next-line no-console
+        console.log('Number of messages put in queue:', NUMBER_OF_MESSAGES_TO_SEND);
+      } else {
+        // eslint-disable-next-line no-console
+        console.error('Unable to send sms:', resPost.status, href);
+      }
     } else {
       // eslint-disable-next-line no-console
       console.error('Unable to find url to send messages.');

@@ -4,6 +4,7 @@ export default Object.freeze({
   ATTEMPTS: 'trying-to-confuse-the-payload',
   FAILED: 'some-random-key',
   PROCESS_TIME: 'passing-time',
+  QUEUE_SIZE: 'queue-size',
   SUCCESSFUL: 'successful-notifications',
   TOTAL: 'total-notifications',
 });
