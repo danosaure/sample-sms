@@ -1,0 +1,38 @@
+import { REGISTER_SENDER } from '../api';
+import { postJson, registry } from '../net';
+
+import { PATHS, SENDER_PATH } from './constants';
+
+import _debug from './debug';
+
+const debug = _debug(__filename);
+
+const { FORM, KEY } = REGISTER_SENDER;
+
+const close = (listener) => {
+  // eslint-disable-next-line no-console
+  console.error('Unable to register sender.');
+  listener.close();
+};
+
+export default async (listener) => {
+  // TODO: Put below in other file.
+  const senderRegisterUrl = await registry(KEY);
+  debug('senderRegisterUrl=', senderRegisterUrl);
+  if (senderRegisterUrl) {
+    const senderPort = listener.address().port;
+    // FIXME: This should be constructed.
+    const url = `http://localhost:${senderPort}${SENDER_PATH}/${PATHS.NOTIFY}`;
+    debug('url=', url);
+
+    const registrationRes = await postJson(senderRegisterUrl, { [FORM.URL.KEY]: url });
+    if (registrationRes.ok) {
+      debug('registrationRes=', registrationRes);
+      debug('Ready to process...');
+    } else {
+      close(listener);
+    }
+  } else {
+    close(listener);
+  }
+};
