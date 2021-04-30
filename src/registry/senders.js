@@ -1,6 +1,7 @@
 import Promise from 'bluebird';
 import { v4 } from 'uuid';
 
+import { NOTIFY_SENDER } from '../api';
 import { postJson } from '../net';
 import { uriPath } from '../utils';
 
@@ -11,6 +12,8 @@ import _debug from './debug';
 const debug = _debug(__filename);
 
 const senders = [];
+
+const { FORM } = NOTIFY_SENDER;
 
 export const get = () => senders.shift();
 
@@ -53,7 +56,9 @@ export const notify = async (req) => {
 
       try {
         // NOTE: If was MQ, it would also send a topic to be handled.
-        const res = await postJson(sender.url, { url });
+        const res = await postJson(sender.url, {
+          [FORM.URL.KEY]: url,
+        });
         if (!res.ok) {
           unregister(sender);
         }
