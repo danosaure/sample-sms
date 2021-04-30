@@ -27,7 +27,9 @@ with reasonable unit testing.
 Please submit the code test at least two business days before the interview, so
 we have time to review it.
 
+
 ## Proposed solution
+
 
 ### Suppositions
 
@@ -69,13 +71,16 @@ we have time to review it.
 
 ## Usage
 
+
 ### Installation
 
     npm ci
 
+
 ### Build
 
     npm run build
+
 
 ### Testing
 
@@ -106,19 +111,6 @@ This registry will act like if it was a Queue, but also database and log server.
 In reality, we would want to send logs to another service.
 
 
-### Producer
-
-    REGISTRY_URL=http://localhost:9000/registry NUMBER_OF_MESSAGES_TO_SEND=1000 npm run producer
-
-This will just connect to the registry and send the number of messages.
-
-
-### Monitor
-
-    REGISTRY_URL=http://localhost:9000/registry MONITOR_REFRESH_DELAY=5 npm run monitor
-
-`MONITOR_REFRESH_DELAY` is the number of seconds between calls.
-
 ### Sender
 
     REGISTRY_URL=http://localhost:9000/registry SENDER_DELAY=250 SENDER_FAILURE_RATE=5 npm run sender
@@ -131,3 +123,17 @@ Since this is designed as a managed queue, the sender is not directly comparable
 to services like AWS SNS or Twilio (which do not subscribe to a topic). It just
 offers a distributed environment that could then call those services to do the
 actual sending (simulated by the `SENDER_DELAY`).
+
+
+### Monitor
+
+    REGISTRY_URL=http://localhost:9000/registry MONITOR_REFRESH_DELAY=5 npm run monitor
+
+`MONITOR_REFRESH_DELAY` is the number of seconds between calls.
+
+
+### Producer
+
+    REGISTRY_URL=http://localhost:9000/registry NUMBER_OF_MESSAGES_TO_SEND=1000 npm run producer
+
+This will just connect to the registry and send the number of messages.
