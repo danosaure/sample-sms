@@ -68,3 +68,5 @@ export const notify = async (req) => {
     },
   );
 };
+
+export const validate = (id) => Boolean(senders.find((sender) => sender.id === id));

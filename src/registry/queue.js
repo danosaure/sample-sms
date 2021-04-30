@@ -8,16 +8,21 @@ import _debug from './debug';
 const debug = _debug(__filename);
 
 const queue = [];
+const idsToSend = [];
 
 export const add = (req, messages) => {
   messages.forEach((message) => {
     // TODO: log new message received.
+    //
+    const id = v4();
 
     queue.push({
-      id: v4(),
+      id,
       start: process.hrtime(),
       ...message,
     });
+
+    idsToSend.push(id);
 
     inc(CACHE_KEYS.TOTAL);
   });
@@ -29,4 +34,6 @@ export const add = (req, messages) => {
 
 export const hasMessages = () => Boolean(queue.length);
 
-export const pop = () => queue.shift();
+export const popId = () => idsToSend.shift();
+
+export const byId = (id) => queue.find((message) => message.id === id);
