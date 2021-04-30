@@ -26,7 +26,7 @@ export default async (req, res) => {
   const messages = form[FORM.MESSAGES.KEY];
   debug('messages=', messages);
 
-  addToQueue(messages);
+  addToQueue(req, messages);
 
   sendHal(req, res, resource);
 };

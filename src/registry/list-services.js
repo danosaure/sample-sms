@@ -6,9 +6,9 @@ import { uriPath } from '../utils';
 
 import { PATHS, REGISTRY_PATH } from './constants';
 
-import _debug from './debug';
-
-const debug = _debug(__filename);
+// import _debug from './debug';
+//
+// const debug = _debug(__filename);
 
 export default async (req, res) => {
   // NOTE: I usually have a library to generate this route (RoutesInfo).
@@ -38,7 +38,7 @@ export default async (req, res) => {
     href: uriPath(req, `${REGISTRY_PATH}/${PATHS.REGISTER_SENDER}`),
   });
 
-  debug('resource=', resource);
+  // debug('resource=', resource);
 
   sendHal(req, res, resource);
 };
