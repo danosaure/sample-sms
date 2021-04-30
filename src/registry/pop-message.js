@@ -32,6 +32,7 @@ export default async (req, res) => {
         message.senderId = id;
         message.senderStart = new Date();
         message.senderEnd = null;
+        message.senderStartHrtime = process.hrtime();
 
         resource[RESULT.MESSAGE] = {
           id: message.id,

@@ -8,9 +8,9 @@ import { CACHE_KEYS, inc } from './cache';
 import { byId as messageById } from './queue';
 import { validate as validateSender } from './senders';
 
-import _debug from './debug';
-
-const debug = _debug(__filename);
+// import _debug from './debug';
+//
+// const debug = _debug(__filename);
 
 const { FORM, RESULT } = SENDING_STATUS;
 
@@ -21,7 +21,7 @@ export default async (req, res) => {
   }, href);
 
   const form = sanitize(FORM, req.body);
-  debug('form=', form);
+  // debug('form=', form);
 
   const senderId = form[FORM.SENDER_ID.KEY];
   if (validateSender(senderId)) {
@@ -30,10 +30,10 @@ export default async (req, res) => {
     if (message) {
       inc(CACHE_KEYS.ATTEMPTS);
 
-      debug('message=', message);
+      // debug('message=', message);
       message.senderEnd = new Date();
 
-      const delta = hrtimeMillis(message.start);
+      const delta = hrtimeMillis(message.senderStartHrtime);
       message.delta = delta;
       inc(CACHE_KEYS.PROCESS_TIME, delta);
 
@@ -41,6 +41,8 @@ export default async (req, res) => {
         inc(CACHE_KEYS.SUCCESSFUL);
       } else {
         inc(CACHE_KEYS.FAILED);
+
+        // TODO: Re-queue error sending.
       }
     } else {
       // This should not happen.
