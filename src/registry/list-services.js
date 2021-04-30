@@ -1,6 +1,6 @@
 import hal from 'hal';
 
-import { SEND_SMS, STATUS } from '../api';
+import { REGISTER_SENDER, SEND_SMS, STATUS } from '../api';
 import { sendHal } from '../net';
 import { uriPath } from '../utils';
 
@@ -31,6 +31,11 @@ export default async (req, res) => {
   resource.link(STATUS.KEY, {
     title: 'Server status',
     href: uriPath(req, `${REGISTRY_PATH}/${PATHS.STATUS}`),
+  });
+
+  resource.link(REGISTER_SENDER.KEY, {
+    title: 'Sender registration',
+    href: uriPath(req, `${REGISTRY_PATH}/${PATHS.REGISTER_SENDER}`),
   });
 
   debug('resource=', resource);

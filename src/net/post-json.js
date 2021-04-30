@@ -13,13 +13,11 @@ export default async (url, json) => {
       body: JSON.stringify(json),
     });
 
-    const resJson = await res.json();
-
-    if (res.ok) {
-      return resJson;
-    }
-
-    throw new Error(`*** POST ERROR ${url} ***: ${resJson.message}.`);
+    return {
+      ok: res.ok,
+      status: res.status,
+      body: res.ok ? await res.json() : await res.text(),
+    };
   } catch (err) {
     throw new Error(`*** POST ERROR ${url} ***: ${err.message}.`);
   }

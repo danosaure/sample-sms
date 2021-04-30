@@ -1,7 +1,7 @@
 import { v4 } from 'uuid';
 
 import { CACHE_KEYS, inc } from './cache';
-import { ingestMessages } from './ingest';
+import { notify } from './senders';
 
 import _debug from './debug';
 
@@ -23,7 +23,8 @@ export const add = (messages) => {
   });
   debug('queue=', queue);
 
-  ingestMessages();
+  // This is async, but we don't need to know it's done.
+  notify();
 };
 
 export const pop = () => queue.shift();

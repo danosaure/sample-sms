@@ -9,9 +9,14 @@
     "eslint": "eslint --fix \"src/**/*.js\"",
     "test": "mocha \"src/**/*.unit.test.js\"",
     "test:watch": "mocha -w --recursive \"src/**/*.unit.test.js\"",
-    "producer": "DEBUG=SMS:* node build/scripts/producer",
-    "monitor": "DEBUG=SMS:* node build/scripts/monitor",
-    "registry": "DEBUG=SMS:* node build/scripts/registry"
+    "producer": "node build/scripts/producer",
+    "producer:debug": "DEBUG=SMS:* npm run producer",
+    "monitor": "node build/scripts/monitor",
+    "monitor:debug": "DEBUG=SMS:* npm run monitor",
+    "registry": "node build/scripts/registry",
+    "registry:debug": "DEBUG=SMS:* npm run registry",
+    "sender": "node build/scripts/sender",
+    "sender:debug": "DEBUG=SMS:* npm run sender"
   },
   "repository": {
     "type": "git",
@@ -24,6 +29,7 @@
   "license": "ISC",
   "dependencies": {
     "babel-regenerator-runtime": "^6.5.0",
+    "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "debug": "^4.3.1",
     "express": "^4.17.1",
