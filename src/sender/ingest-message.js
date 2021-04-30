@@ -1,5 +1,6 @@
 import { POP_MESSAGE, SENDING_STATUS } from '../api';
 import { postJson } from '../net';
+import { getLinkHref } from '../utils';
 
 import { getSenderId } from './cache';
 import { SENDER_DELAY, SENDER_FAILURE_RATE } from './constants';
@@ -11,24 +12,28 @@ const debug = _debug(__filename);
 const { FORM: POP_MESSAGE_FORM, RESULT } = POP_MESSAGE;
 const { FORM: SENDING_STATUS_FORM } = SENDING_STATUS;
 
-const ingest = async (url, id) => {
-  // debug('should ingest message from url=', url);
+const ingest = async (ingestUrl, id) => {
+  // debug('should ingest message from ingestUrl=', ingestUrl);
 
   try {
     // NOTE: Ideally, we would set the id in a header, and use a GET call.
-    const res = await postJson(url, {
+    const ingestRes = await postJson(ingestUrl, {
       [POP_MESSAGE_FORM.ID.KEY]: id,
     });
-    if (res.ok) {
-      const { body } = res;
+    if (ingestRes.ok) {
+      const { body } = ingestRes;
+      // debug('ingestRes body=', body);
+
       const message = body[RESULT.MESSAGE];
+      const sendingStatusUrl = getLinkHref(body, SENDING_STATUS.KEY);
+      // debug('sendingStatusUrl=', sendingStatusUrl);
 
       if (message) {
         // debug('message=', message);
 
         // Time out simulate delay of using external service.
-        setTimeout(() => {
-          const senderForm = {
+        setTimeout(async () => {
+          const sendingStatusForm = {
             [SENDING_STATUS_FORM.SENDER_ID.KEY]: id,
             [SENDING_STATUS_FORM.MESSAGE_ID.KEY]: message.id,
           };
@@ -36,17 +41,32 @@ const ingest = async (url, id) => {
           const rate = Math.random() * 100;
           if (rate > SENDER_FAILURE_RATE) {
             // It's a success.
+            sendingStatusForm[SENDING_STATUS_FORM.SUCCESS.KEY] = true;
           } else {
             // It's a failure.
-            senderForm[SENDING_STATUS_FORM.ERROR.KEY] = 'Error sending.';
+            sendingStatusForm[SENDING_STATUS_FORM.SUCCESS.KEY] = false;
+            sendingStatusForm[SENDING_STATUS_FORM.ERROR.KEY] = 'Error sending.';
           }
 
-          debug('senderForm=', senderForm);
+          // debug('sendingStatusForm=', sendingStatusForm);
 
-          // TODO: Send back report.
+          try {
+            const sendingStatusRes = await postJson(sendingStatusUrl, sendingStatusForm);
+            if (sendingStatusRes.ok) {
+              debug('sending status reported back successfully.');
+            } else {
+            // TODO: Unable to send status report. What to do?
+            // eslint-disable-next-line no-console
+              console.error('Unable to update sending status:', sendingStatusRes.status, sendingStatusUrl);
+            }
+          } catch (sendingStatusError) {
+            // TODO: Unable to send status report. What to do?
+            // eslint-disable-next-line no-console
+            console.error('Unable to update sending status:', sendingStatusError);
+          }
 
           // Try get next message...
-          ingest(url, id);
+          ingest(ingestUrl, id);
         }, SENDER_DELAY);
       }
     } else {
@@ -59,4 +79,4 @@ const ingest = async (url, id) => {
   }
 };
 
-export default async (url) => ingest(url, getSenderId());
+export default async (ingestUrl) => ingest(ingestUrl, getSenderId());

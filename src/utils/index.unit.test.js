@@ -13,6 +13,7 @@ describe(filespace(__filename), () => {
     ['envNumber', 'function', 2],
     ['envString', 'function', 2],
     ['getLinkHref', 'function', 2],
+    ['hrtimeMillis', 'function', 1],
     ['numberWithDefault', 'function', 2],
     ['stringWithDefault', 'function', 2],
     ['uriPath', 'function', 2],
