@@ -30,6 +30,8 @@ export default async (req, res) => {
         message.senderId = id;
         message.senderStart = new Date();
         resource[RESULT.MESSAGE] = message;
+
+        // TODO: Log ingestion
       } else {
         // This should not happen.
         resource[RESULT.ERROR] = `Cannot find message id:${messageId}`;
