@@ -1,34 +1,28 @@
 import { STATUS } from '../api';
-import { REGISTRY_URL } from '../constants';
-import { getHal } from '../net';
-import { getLinkHref } from '../utils';
+import { registry } from '../net';
 
 import { MONITOR_REFRESH_DELAY } from './constants';
 import continuousMonitor from './continuous-monitor';
 
-// import _debug from './debug';
-//
-// const debug = _debug(__filename);
+import _debug from './debug';
+
+const debug = _debug(__filename);
 
 const { KEY } = STATUS;
 
 export default async () => {
   try {
-    const res = await getHal(REGISTRY_URL);
-    if (res.ok) {
-      const { body } = res;
-      const href = getLinkHref(body, KEY);
-      if (href) {
-        continuousMonitor(href, MONITOR_REFRESH_DELAY);
-      } else {
-        throw new Error(`Cannot find "${KEY}" link on registry.`);
-      }
+    const href = await registry(KEY);
+    debug('href=', href);
+
+    if (href) {
+      continuousMonitor(href, MONITOR_REFRESH_DELAY);
     } else {
       // eslint-disable-next-line no-console
-      console.error('Error registry:', res.body);
+      console.error('Unable to find url to monitor.');
     }
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.error('*** ERROR *** Error connecting to registry:', err);
+    console.error('*** ERROR *** Error monitoring server:', err);
   }
 };
