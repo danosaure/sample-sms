@@ -2,8 +2,8 @@ import hal from 'hal';
 
 import { sanitize, SEND_SMS } from '../api';
 import { sendHal } from '../net';
+import { uriPath } from '../utils';
 
-import { PATHS, REGISTRY_PATH } from './constants';
 import { add as addToQueue } from './queue';
 
 import _debug from './debug';
@@ -14,7 +14,7 @@ const { FORM } = SEND_SMS;
 
 export default async (req, res) => {
   // NOTE: RoutesInfo
-  const href = `${REGISTRY_PATH}/${PATHS.SEND_SMS}`;
+  const href = uriPath(req);
   const resource = new hal.Resource({
     title: 'Sending sms',
   }, href);

@@ -1,13 +1,14 @@
 import { REGISTER_SENDER } from '../api';
 import { postJson, registry } from '../net';
 
+import { setSenderId } from './cache';
 import { PATHS, SENDER_PATH } from './constants';
 
 import _debug from './debug';
 
 const debug = _debug(__filename);
 
-const { FORM, KEY } = REGISTER_SENDER;
+const { FORM, KEY, RESULT } = REGISTER_SENDER;
 
 const close = (listener) => {
   // eslint-disable-next-line no-console
@@ -27,7 +28,8 @@ export default async (listener) => {
 
     const registrationRes = await postJson(senderRegisterUrl, { [FORM.URL.KEY]: url });
     if (registrationRes.ok) {
-      debug('registrationRes=', registrationRes);
+      const { body } = registrationRes;
+      setSenderId(body[RESULT.ID]);
       debug('Ready to process...');
     } else {
       close(listener);
