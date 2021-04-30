@@ -26,12 +26,16 @@ export default async (listener) => {
     const url = `http://localhost:${senderPort}${SENDER_PATH}/${PATHS.NOTIFY}`;
     debug('url=', url);
 
-    const registrationRes = await postJson(senderRegisterUrl, { [FORM.URL.KEY]: url });
-    if (registrationRes.ok) {
-      const { body } = registrationRes;
-      setSenderId(body[RESULT.ID]);
-      debug('Ready to process...');
-    } else {
+    try {
+      const registrationRes = await postJson(senderRegisterUrl, { [FORM.URL.KEY]: url });
+      if (registrationRes.ok) {
+        const { body } = registrationRes;
+        setSenderId(body[RESULT.ID]);
+        debug('Ready to process...');
+      } else {
+        close(listener);
+      }
+    } catch (err) {
       close(listener);
     }
   } else {
