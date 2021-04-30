@@ -3,9 +3,9 @@ import { getLinkHref } from '../utils';
 
 import getHal from './get-hal';
 
-// import _debug from './debug';
-//
-// const debug = _debug(__filename);
+import _debug from './debug';
+
+const debug = _debug(__filename);
 
 export default async (key) => {
   try {
@@ -16,12 +16,9 @@ export default async (key) => {
       const { body } = res;
       return getLinkHref(body, key);
     }
-    // eslint-disable-next-line no-console
-    console.error('Error registry:', res.body);
+    debug('Error registry:', res.body);
+    return null;
   } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error('*** ERROR *** Error connecting to registry:', err);
+    return null;
   }
-
-  return null;
 };
