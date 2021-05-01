@@ -4,7 +4,7 @@ import { checkProperties } from '../_.test';
 
 import filespace from './_.test';
 
-describe.only(filespace(__filename), () => {
+describe(filespace(__filename), () => {
   const clone = { ...moduleToTest };
   after(() => expect(clone).to.be.empty());
   checkProperties(clone, [
