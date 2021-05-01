@@ -1,5 +1,7 @@
 # Cloud Engineer Coding Test
 
+[![Coverage Status](https://coveralls.io/repos/github/danosaure/sample-sms/badge.svg?branch=master)](https://coveralls.io/github/danosaure/sample-sms?branch=master)
+
 ## Problem
 
 The objective is to simulate sending a large number of SMS alerts, like for an

@@ -4,8 +4,9 @@
   "description": "Simple coding test",
   "scripts": {
     "babel": "babel --out-dir=build --ignore \"src/**/*.test.js\" src",
-    "build": "run-s eslint coverage babel",
+    "build": "run-s eslint babel",
     "coverage": "nyc npm test",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "eslint": "eslint --fix \"src/**/*.js\"",
     "test": "mocha \"src/**/*.unit.test.js\"",
     "test:watch": "mocha -w --recursive \"src/**/*.unit.test.js\"",
@@ -46,6 +47,7 @@
     "@babel/register": "^7.13.16",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
+    "coveralls": "^3.1.0",
     "dirty-chai": "^2.0.1",
     "eslint": "^7.25.0",
     "eslint-config-airbnb": "^18.2.1",
