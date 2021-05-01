@@ -27,7 +27,7 @@ export const checkProperties = (clone, properties) => properties.forEach((proper
 
       if (typeof typeOption !== 'undefined') {
         if (propertyType === 'object') {
-          Object.vaues(clone[propertyName]).forEach((value) => {
+          Object.values(clone[propertyName]).forEach((value) => {
             expect(value).to.be.a(typeOption);
           });
         } else if (propertyType === 'array') {
